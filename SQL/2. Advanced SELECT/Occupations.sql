@@ -1,21 +1,21 @@
-select
+SELECT
     Doctor,
     Professor,
     Singer,
     Actor
-from (
-    select
+FROM (
+    SELECT
         NameOrder,
-        max(case Occupation when 'Doctor' then Name end) as Doctor,
-        max(case Occupation when 'Professor' then Name end) as Professor,
-        max(case Occupation when 'Singer' then Name end) as Singer,
-        max(case Occupation when 'Actor' then Name end) as Actor
-    from (
-            select
+        MAX(CASE Occupation WHEN 'Doctor' THEN Name END) AS Doctor,
+        MAX(CASE Occupation WHEN 'Professor' THEN Name END) AS Professor,
+        MAX(CASE Occupation WHEN 'Singer' THEN Name END) AS Singer,
+        MAX(CASE Occupation WHEN 'Actor' THEN Name END) AS Actor
+    FROM (
+            SELECT
                 Occupation,
                 Name,
-                row_number() over(partition by Occupation order by Name ASC) as NameOrder
-            from Occupations
-         ) as NameLists
-    group by NameOrder
-    ) as Names
+                row_number() OVER (PARTITION BY Occupation ORDER BY Name ASC) AS NameOrder
+            FROM Occupations
+         ) AS NameLists
+    GROUP BY NameOrder
+    ) AS Names
